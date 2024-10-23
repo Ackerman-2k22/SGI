@@ -1,0 +1,192 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-10">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="">Incidents</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">All Incidents</li>
+                </ol>
+            </nav>
+        </div>
+
+        <div class="col-md-2">
+            <a href="{% url 'add-incidents'%}" class="btn btn-primary">Add Incident</a>
+        </div>
+    </div>
+
+<div class="container">
+
+{% include 'partials/_messages.html' %}
+
+<div class="row">
+    <div class="col-md-8">
+
+        <form id="filter-form" class="form-inline">
+            <div class="form-group mb-2">
+                <select name="category" class="form-control">
+                    <option value="">All categories</option>
+                    {% for category in categories %}
+                    <option value="{{ category }}">{{ category }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <div class="form-group mx-sm-3 mb-2">
+                <select name="status" class="form-control">
+                    <option value="">All statuts</option>
+                    {% for status in statuses %}
+                    <option value="{{ status }}">{{ status }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <button type="submit" class="btn btn-primary mb-2 filter-btn">Filtrer</button>
+        </form>
+
+
+    </div>
+    <div class="col-md-4">
+ 
+
+        <div class="form-group">
+            <input type="text" class="form-control" id="searchField" placeholder="Search">
+        </div>
+    </div>
+</div>
+
+
+
+<div class="app-table">
+    <table class="table table-stripped table-hover">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Client username</th>
+                <th>Description</th>
+                <th>Category</th>
+                <th>Created at</th>
+                <th>Status</th>
+                <th>Assigned agent</th>
+                <th>Comment</th>
+                <th>Resolved at</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for incident in page_obj %}
+            <tr>
+                <td>{{ incident.id }}</td>
+                <td>{{ incident.client.username }}</td> 
+                <td>{{ incident.description }}</td>
+                <td>{{ incident.category }}</td>
+                <td>{{ incident.created_at }}</td>
+                <td>{{ incident.get_status_display }}</td>  
+                <td>{{ incident.assigned_agent }}</td>
+                <td>{{ incident.comment }}</td>
+                <td>{{ incident.resolved_at }}</td>
+    
+                <td>
+                    <a
+                        href="{% url 'edit-incidents' incident.id %}"
+                        class="btn btn-secondary btn-sm"
+                        >Edit</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+
+
+<div class="table-output">
+    <table class="table table-stripped table-hover">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Client username</th>
+                <th>Description</th>
+                <th>Category</th>
+                <th>Created at</th>
+                <th>Status</th>
+                <th>Assigned agent</th>
+                <th>Comment</th>
+                <th>Resolved at</th>
+            </tr>
+        </thead>
+        <tbody class="table-body">
+        </tbody>
+    </table>
+</div>
+
+
+<div class="pagination-container">
+<div class="">
+    Showing page {{page_obj.number}} of {{ page_obj.paginator.num_pages }}
+</div>
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-end">
+        {% if page_obj.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page=1" aria-label="First">
+                    <span aria-hidden="true">&laquo;&laquo;</span>
+                </a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+        {% else %}
+            <li class="page-item disabled">
+                <span class="page-link">&laquo;&laquo;</span>
+            </li>
+            <li class="page-item disabled">
+                <span class="page-link">&laquo;</span>
+            </li>
+        {% endif %}
+        
+        {% for num in page_obj.paginator.page_range %}
+            {% if num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                <li class="page-item {% if page_obj.number == num %}active{% endif %}">
+                    <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                </li>
+            {% endif %}
+        {% endfor %}
+        
+        {% if page_obj.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}" aria-label="Last">
+                    <span aria-hidden="true">&raquo;&raquo;</span>
+                </a>
+            </li>
+        {% else %}
+            <li class="page-item disabled">
+                <span class="page-link">&raquo;</span>
+            </li>
+            <li class="page-item disabled">
+                <span class="page-link">&raquo;&raquo;</span>
+            </li>
+        {% endif %}
+    </ul>
+</nav>
+</div>
+
+
+
+<script src="{% static 'js/searchIncidents.js' %}"></script>
+<script src="{% static 'js/filterIncidents.js' %}"></script>
+
+{% endblock content %}
+
+    

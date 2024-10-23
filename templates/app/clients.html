@@ -1,0 +1,88 @@
+{% extends 'base.html' %} 
+{% load static %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-10">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="">Clients</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">All Clients</li>
+                </ol>
+            </nav>
+        </div>
+
+        <div class="col-md-2">
+            <a href="{% url 'add-incidents'%}" class="btn btn-primary">Add Client</a>
+        </div>
+    </div>
+
+<div class="container">
+
+{% include 'partials/_messages.html' %}
+
+<div class="row">
+    <div class="col-md-8">
+    </div>
+    <div class="col-md-4">
+        <div class="form-group">
+            <input type="text" class="form-control" id="searchField" placeholder="Search">
+        </div>
+    </div>
+</div>
+
+
+<div class="app-table">
+    <table class="table table-stripped table-hover">
+        <thead>
+            <tr>
+                <th>Client ID</th>
+                <th>Username</th>
+                <th>Phone number</th>
+                <th>Number of incidents</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for client in clients %}
+            <tr>
+                <td>{{ client.client_id }}</td>
+                <td>{{ client.username }}</td> 
+                <td>{{ client.phone_number }}</td>
+                <td>{{ client.number_of_incidents }}</td>
+                <td>
+                    <a
+                        href="{% url 'details' client.client_id %}"
+                        class="btn btn-secondary btn-sm"
+                        >Details</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+
+<div class="table-output">
+    <table class="table table-stripped table-hover">
+        <thead>
+            <tr>
+                <th>Client ID</th>
+                <th>Username</th>
+                <th>Phone number</th>
+                <th>Number of incidents</th>
+            </tr>
+        </thead>
+        <tbody class="table-body">
+        </tbody>
+    </table>
+    </div>
+</div>
+
+
+</div>
+<script src="{% static 'js/searchClients.js' %}"></script>
+{% endblock content %}
+
+    

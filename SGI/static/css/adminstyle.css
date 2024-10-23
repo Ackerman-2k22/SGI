@@ -1,0 +1,32 @@
+#header {
+    background: rgb(2, 53, 53); /* Un gris clair pour le fond du header */
+    color: rgb(159, 172, 174); /* Maintient la couleur du texte pour le contraste */
+}
+
+#branding h1 {
+    color: rgb(0, 105, 148); /* Un bleu pour le titre, assurant une bonne visibilité sur fond gris */
+}
+
+div.breadcrumbs {
+    background: rgb(32, 62, 95); /* Un bleu très clair pour le fond, assurant un bon contraste avec le texte */
+    color: rgb(91, 137, 142); /* Couleur du texte foncée pour une meilleure lisibilité */
+}
+
+.login .submit-row {
+    padding: 0px !important;
+}
+
+input[type="submit"],
+input[type="button"],
+.submit-row input {
+    width: 100%;
+    background: rgb(0, 105, 148); /* Bleu pour les boutons, assurez-vous que cela contraste avec le texte */
+    color: #ffffff; /* Texte blanc pour contraster avec le fond bleu */
+}
+
+.module h2,
+.module caption,
+.inline-group h2 {
+    background: rgb(0, 105, 148); /* Bleu pour un contraste avec le texte blanc */
+    color: #ffffff; /* Texte blanc pour le contraste */
+}

@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{% url 'app' %}">Incidents</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Edit Incident</li>
+        </ol>
+    </nav>
+    
+    <div class="card">
+        <div class="card-body">
+            <form action="{% url 'edit-incidents' incident.id %}" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="incident_number">ID</label>
+                    <input type="text" class="form-control form-control-sm" id="id" name="id" value="{{ incident.id }}" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="incident_number">Incident number</label>
+                    <input type="text" class="form-control form-control-sm" id="incident_number" name="incident_number" value="{{ incident.incident_number }}" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <input type="text" class="form-control form-control-sm" id="description" name="description" value="{{ incident.description }}" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="client">Client</label>
+                    <input type="text" class="form-control form-control-sm" id="client" name="client" value="{{ incident.client.username }}" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="category">Category</label>
+                    <input type="text" class="form-control form-control-sm" id="category" name="category" value="{{ incident.category }}" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="created_at">Created at</label>
+                    <input type="date" class="form-control form-control-sm" id="created_at" name="created_at" value="{{ incident.created_at|date:"Y-m-d" }}" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="assigned_agent">assigned agent</label>
+                    <input type="text" class="form-control form-control-sm" id="assigned_agent" name="assigned_agent" value="{{ incident.assigned_agent }}" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="status">Statut</label>
+                    <select class="form-control form-control-sm" id="status" name="status">
+                        {% for value, name in incident.STATUS_CHOICES %}
+                            <option value="{{ value }}" {% if incident.status == value %}selected{% endif %}>{{ name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="comment">Comment</label>
+                    <textarea class="form-control form-control-sm" id="comment" name="comment">{{ incident.comment }}</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="resolved_at">Resolved at</label>
+                    <input type="date" class="form-control form-control-sm" id="resolved_at" name="resolved_at" value="{{ incident.resolved_at|date:"Y-m-d" }}" readonly>
+                </div>
+                <input type="submit" value="Save" class="btn btn-primary btn-primary-sm">
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

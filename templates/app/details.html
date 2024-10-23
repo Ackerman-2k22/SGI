@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{% url 'app' %}">Clients</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Details</li>
+        </ol>
+    </nav>
+    
+    <div class="card">
+        <div class="card-body">
+            <form action="{% url 'details' client_id=client.client_id %}" method="get">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="client_id">ID</label>
+                    <input type="text" class="form-control form-control-sm" id="client_id" name="client_id" value="{{ client.client_id }}" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" class="form-control form-control-sm" id="username" name="username" value="{{ client.username }}" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="phone_number">Phone number</label>
+                    <input type="text" class="form-control form-control-sm" id="phone_number" name="phone_number" value="{{ client.phone_number }}" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="number_of_incidents">Number of incidents</label>
+                    <input type="text" class="form-control form-control-sm" id="number_of_incidents" name="number_of_incidents" value="{{ client.number_of_incidents }}" readonly>
+                </div>
+                <input type="button" value="Back" class="btn btn-primary btn-primary-sm">
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
